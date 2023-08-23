@@ -1,0 +1,48 @@
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+  }
+
+  .play-button {
+    width: 15vw;
+  }
+
+
+  img.button:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 10% crimson);
+  }
+
+  .breathing {
+    animation: breathing 2s infinite linear;
+  }
+  
+  
+  @keyframes breathing {
+    0% {
+      transform: scale(0.9);
+    }
+  
+    25% {
+      transform: scale(0.95);
+    }
+  
+    60% {
+      transform: scale(1);
+    }
+  
+    85% {
+      transform: scale(0.95);
+    }
+
+    100% {
+      transform: scale(0.9);
+    }
+  }
+  

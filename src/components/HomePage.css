@@ -1,0 +1,13 @@
+/* style.css */
+
+body.home::before {    
+  content: "";
+  background-image: url('images/start-bg.png');
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.3;
+}
