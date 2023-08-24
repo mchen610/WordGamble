@@ -14,11 +14,12 @@
 }
 
 span.bg {
+    width: 100%;
+    height: 100%;
     position: absolute;
     background-image: url("images/machine-bg.png");
-    background-size: 100% 100%; 
-    z-index: 100;
-
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .slot {
@@ -34,7 +35,7 @@ span.bg {
 }
 
 .slot-container.started{
-    animation: scrolling infinite linear 10s;
+    animation: scrolling infinite linear;
 }
 
 .slot-container.stopped {
@@ -42,8 +43,6 @@ span.bg {
 }
 
 .slot-container img {
-    background-image: url("images/letter-bg.png");
-    background-size: cover;
     -webkit-user-drag: none;
     max-width: 100%;
     /* Make the image's width match the width of the container */
