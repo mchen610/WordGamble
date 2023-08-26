@@ -39,6 +39,8 @@ span.bg {
 }
 
 .slot-container.stopped {
+    animation: none;
+    
     animation-play-state: paused;
 }
 

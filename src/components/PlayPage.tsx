@@ -5,10 +5,7 @@ import { Button } from "./Buttons";
 import CSS from "csstype";
 
 const letters: string[] = "ABCDEFGHIJK".split("");
-const duration = 10;
-const durationStyle: CSS.Properties = {
-    animationDuration: String(duration) + "s",
-};
+const duration = 0.5;
 
 function shuffle(list: string[]) {
     return list
@@ -25,35 +22,28 @@ function newletterList() {
     return newLetters;
 }
 
-function checkTime() {
-    console.log("HIIIIIIIII");
-    console.timeEnd("hi");
-    return "hi";
-}
-
 function slotCol(list: string[], startTime: DOMHighResTimeStamp) {
     const [stopped, setStopped] = useState(false);
+    const [waitTime, setWaitTime] = useState(0);
+
+    let style = {
+        animationDuration: String(duration) + "s",
+        transform: stopped ? `translateY(-${waitTime}%)` : "",
+    };
 
     return (
         <div
-            style={durationStyle}
+            style={style}
             onClick={() => {
-
-                // ms/letter - elapsed % ms/letter
-                let waitTime =
-                    (duration * 1000) / letters.length -
-                    ((performance.now() - startTime) %
-                        ((duration * 1000) / letters.length));
-                setTimeout(() => setStopped(true), waitTime);
+                setWaitTime();
+                setStopped(true);
                 console.log(waitTime);
-                console.time("hi"); 
             }}
             className={classNames(
                 "slot-container",
                 { stopped: stopped },
                 { started: startTime > 0 }
             )}
-            key={checkTime()}
         >
             {list.map((letter, index) => (
                 <img
