@@ -1,10 +1,23 @@
 import "./PlayPage.css";
 import { useState } from "react";
 import classNames from "classnames";
+import rawWords from "./words.txt";
 import { Button } from "./Buttons";
 
+//https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
+
 const letters: string[] = "ABCDEFGHIJK".split("");
-const duration = 2;
+const duration = 5;
+let words: string[] = [];
+
+await fetch(rawWords)
+    .then((response) => response.text())
+    .then((content) => {
+        words = content.split("\r\n");
+    })
+    .catch((error) => {
+        console.error("Error fetching file:", error);
+    });
 
 function shuffle(list: string[]) {
     return list
@@ -28,41 +41,86 @@ export default function PlayPage() {
         right: newletterList(),
     });
 
-    const [finalLeft, setFinalLeft] = useState(listDict["left"].slice(0, 3));
+    const [finalLeft, setFinalLeft] = useState<string[]>([]);
 
-    const [finalCenter, setFinalCenter] = useState(
-        listDict["center"].slice(0, 3)
-    );
+    const [finalCenter, setFinalCenter] = useState<string[]>([]);
 
-    const [finalRight, setFinalRight] = useState(listDict["right"].slice(0, 3));
+    const [finalRight, setFinalRight] = useState<string[]>([]);
 
-    function slotCol(
+    const [finalWords, setFinalWords] = useState<string[]>([]);
+
+    const [finished, setFinished] = useState(false);
+
+    const [validWords, setValidWords] = useState<string[]>([]);
+
+    const handleFinished = () => {
+        //horizontal
+        for (let i = 0; i < finalCenter.length; i++) {
+            setFinalWords((prevWords) => [
+                ...prevWords,
+                finalLeft[i] + finalCenter[i] + finalRight[i],
+            ]);
+        }
+
+        //vertical
+        setFinalWords((prevWords) => [
+            ...prevWords,
+            finalLeft.join(""),
+            finalCenter.join(""),
+            finalRight.join(""),
+        ]);
+
+        //diagonal
+        setFinalWords((prevWords) => [
+            ...prevWords,
+            finalLeft[0] + finalCenter[1] + finalRight[2],
+        ]);
+        setFinalWords((prevWords) => [
+            ...prevWords,
+            finalLeft[2] + finalCenter[1] + finalRight[0],
+        ]);
+    };
+
+    if (
+        finalWords.length === 0 &&
+        finalLeft.length > 0 &&
+        finalCenter.length > 0 &&
+        finalRight.length > 0
+    ) {
+        handleFinished();
+        setFinished(true);
+    } else if (finished && validWords.length === 0) {
+        for (let i = 0; i < finalWords.length; i++) {
+            if (words.includes(finalWords[i])) {
+                setValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
+            }
+        }
+    }
+
+    const setFinal = (
+        place: "left" | "center" | "right",
+        letterIndex: number
+    ) => {
+        if (place === "left") {
+            setFinalLeft(listDict["left"].slice(letterIndex, letterIndex + 3));
+        } else if (place === "center") {
+            setFinalCenter(
+                listDict["center"].slice(letterIndex, letterIndex + 3)
+            );
+        } else if (place === "right") {
+            setFinalRight(
+                listDict["right"].slice(letterIndex, letterIndex + 3)
+            );
+        }
+    };
+
+    const slotCol = (
         place: "left" | "center" | "right",
         newStartTime: DOMHighResTimeStamp
-    ) {
-        const list = listDict[place];
+    ) => {
         const [stopped, setStopped] = useState(false);
         const [offset, setOffset] = useState(0);
         const [startTime, setStartTime] = useState(0);
-
-        function setFinal(
-            place: "left" | "center" | "right",
-            letterIndex: number
-        ) {
-            if (place === "left") {
-                setFinalLeft(
-                    listDict["left"].slice(letterIndex, letterIndex + 3)
-                );
-            } else if (place === "center") {
-                setFinalCenter(
-                    listDict["center"].slice(letterIndex, letterIndex + 3)
-                );
-            } else if (place === "right") {
-                setFinalRight(
-                    listDict["right"].slice(letterIndex, letterIndex + 3)
-                );
-            }
-        }
 
         if (newStartTime != startTime) {
             setStopped(false);
@@ -81,11 +139,13 @@ export default function PlayPage() {
                             let letterTime = (duration * 1000) / letters.length;
                             let elapsedTime = performance.now() - startTime;
                             let letterIndex =
-                                Math.floor(elapsedTime / letterTime) %
-                                letters.length + 1;
+                                (Math.floor(elapsedTime / letterTime) %
+                                    letters.length) +
+                                1;
                             let newOffset =
-                                ((letterIndex) / list.length) * 100;
+                                (letterIndex / listDict[place].length) * 100;
                             console.log(newOffset);
+                            console.log(letterIndex);
                             setOffset(newOffset);
                             setStopped(true);
                             setFinal(place, letterIndex);
@@ -97,7 +157,7 @@ export default function PlayPage() {
                     { started: startTime > 0 }
                 )}
             >
-                {list.map((letter, index) => (
+                {listDict[place].map((letter, index) => (
                     <img
                         src={"images/letters/" + letter + ".svg"}
                         alt={"This was the letter " + { letter }}
@@ -106,7 +166,7 @@ export default function PlayPage() {
                 ))}
             </div>
         );
-    }
+    };
 
     const [startTime, setStartTime] = useState(0);
 
@@ -147,6 +207,11 @@ export default function PlayPage() {
                                     right: newletterList(),
                                 });
                                 setStartTime(performance.now());
+                                setFinalLeft([]);
+                                setFinalCenter([]);
+                                setFinalRight([]);
+                                setFinalWords([]);
+                                setFinished(false);
                             }}
                         />
                     </div>

@@ -1,6 +1,6 @@
 /* style.css */
 
-body.home::before {    
+div.home::before {    
   content: "";
   background-image: url('images/start-bg.png');
   background-size: cover;

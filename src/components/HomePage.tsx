@@ -6,7 +6,7 @@ export default function HomePage() {
     return (
         <>
             <title>Word Gamble</title>
-            <body className="home">
+            <div className="home">
                 <nav className="navbar navbar-expand navbar-dark bg-dark fixed-top py-1">
                     <div className="container d-flex justify-content-center">
                         <a className="navbar-brand">Word Gamble</a>
@@ -20,7 +20,7 @@ export default function HomePage() {
                 />
 
                 <Footer />
-            </body>
+            </div>
         </>
     );
 }
