@@ -14,12 +14,8 @@ export default function Link_Button({
 }: Link_Props) {
     return (
         <div className="centered">
-            <Link to={redir_link}>
-                <img
-                    src={img_link}
-                    alt={img_link}
-                    className={className}
-                />
+            <Link to={redir_link} className={className}>
+                <img src={img_link} alt={img_link} className = "rounded" />
             </Link>
         </div>
     );

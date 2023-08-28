@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-export const MyComponent = () => {
+export const Test = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
