@@ -11,12 +11,13 @@
     width: 100vw;
     align-items: center;
     justify-content: center;
+    background-color: lightgray;
 }
 
 .machine {
-    background-image: url("images/letter-bg.png");
+    background-image: url("images/machine-bg.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
     position: absolute;
     width: 17vw;
     height: 16vw;
@@ -27,19 +28,21 @@
 
 span.bg {
     width: 100%;
-    height: 100%;
+    height: 106%;
+    top: -1;
     position: absolute;
-    background-image: url("images/machine-bg.png");
+    background-image: url("images/machine-front.png");
     background-repeat: no-repeat;
     background-size: cover;
-}
+}       
 
 .slot {
     position: relative;
     object-fit: cover;
     overflow: hidden;
     width: 30%; 
-    height: 93.75%;
+    height: 98%;
+    padding-top: 1%;
 }
 
 .slot-container {
@@ -73,7 +76,6 @@ span.bg {
     top: 70%;
     width: 15vw;
     height: 5vw;
-    background-image: url("images/retry-button.png");
 }
 
 @keyframes scrolling {

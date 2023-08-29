@@ -1,13 +1,17 @@
 import "./Footer.css";
 import { Link } from "react-router-dom";
 
-interface footerItem {
+interface IFooterItem {
     title: string;
     path: string;
 }
 
-function Footer() {
-    const footerLinks: footerItem[] = [
+interface IFooter {
+    mode: "light" | "dark";
+}
+
+function Footer({ mode }: IFooter) {
+    const footerLinks: IFooterItem[] = [
         {
             title: "About",
             path: "/about",
@@ -22,8 +26,13 @@ function Footer() {
         },
     ];
 
+    const classNames = {
+        light: "bg-white navbar-light border-dark",
+        dark: "bg-dark navbar-dark border-white",
+    };
+
     return (
-        <nav className="navbar navbar-expand-lg py-0 bg-white fixed-bottom">
+        <nav className={`navbar navbar-expand-lg py-0 fixed-bottom border-bottom ${classNames[mode]}`}>
             <div
                 className="container-fluid collapse navbar-collapse"
             >

@@ -34,7 +34,7 @@ export function Button({ className, img_link, func }: Props) {
                 src={img_link}
                 alt={img_link}
                 onClick={func}
-                className={className}
+                className={`${className} gradient-overlay`}
             />
         </div>
     );

@@ -11,22 +11,44 @@
   }
 
   .play-button {
+    animation: breathing 2s infinite linear, fadeIn 0.5s linear;
     width: 20vw;
   }
   
   .retry-button {
     width: 15vw;
+    filter: drop-shadow(0 0 10px gray);
+    animation: breathing 2s infinite linear, fadeIn 3s ease-in;
+  }
+
+  .start-button{
+    transition: filter 0.3s linear;
+  }
+
+  .start-button:hover {
+    filter: drop-shadow(0 0 5px red);
   }
 
   img.button:hover {
     cursor: pointer;
-    filter: drop-shadow(0 0 10% crimson);
   }
 
   .breathing {
-    animation: breathing 2s infinite linear;
+    animation: breathing 2s infinite linear, fadeIn 1s linear;
   }
   
+  .gradient-overlay {
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
   
   @keyframes breathing {
     0% {
@@ -40,7 +62,6 @@
     60% {
       transform: scale(1);
     }
-
 
     100% {
       transform: scale(0.9);

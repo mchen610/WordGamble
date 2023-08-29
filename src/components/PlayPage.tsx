@@ -3,6 +3,8 @@ import { useState } from "react";
 import classNames from "classnames";
 import rawWords from "./words.txt";
 import { Button } from "./Buttons";
+import Footer from "./Footer";
+import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
@@ -170,9 +172,12 @@ export default function PlayPage() {
 
     const [startTime, setStartTime] = useState(0);
 
+
+
     return (
-        <>
+        <>  
             <title>Play</title>
+            <Header mode="light" />
             <div className="play-container">
                 <div className="machine">
                     <span className="bg" />
@@ -188,7 +193,7 @@ export default function PlayPage() {
                     <div className="line" />
                     {startTime === 0 && (
                         <Button
-                            className="button breathing play-button"
+                            className="button play-button"
                             img_link="images/play-button.svg"
                             func={() => setStartTime(performance.now())}
                         />
@@ -198,7 +203,7 @@ export default function PlayPage() {
                 {startTime > 0 && (
                     <div className="retry-container">
                         <Button
-                            className="button breathing retry-button"
+                            className="button retry-button"
                             img_link="images/retry-button.png"
                             func={() => {
                                 setListDict({
@@ -217,6 +222,7 @@ export default function PlayPage() {
                     </div>
                 )}
             </div>
+            <Footer mode="dark" />
         </>
     );
 }

@@ -1,5 +1,6 @@
 import "./HomePage.css";
 import Footer from "./Footer";
+import Header from "./Header";
 import Link_Button from "./Buttons";
 
 export default function HomePage() {
@@ -7,19 +8,15 @@ export default function HomePage() {
         <>
             <title>Word Gamble</title>
             <div className="home">
-                <nav className="navbar navbar-expand navbar-dark bg-dark fixed-top py-1">
-                    <div className="container d-flex justify-content-center">
-                        <a className="navbar-brand">Word Gamble</a>
-                    </div>
-                </nav>
+                <Header mode="dark"/>
 
                 <Link_Button
-                    className="button rounded breathing"
+                    className="button rounded start-button breathing"
                     img_link="images/start-button.png"
                     redir_link="/play"
                 />
 
-                <Footer />
+                <Footer mode="light"/>
             </div>
         </>
     );
