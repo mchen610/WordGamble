@@ -6,8 +6,8 @@
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
-    align-items: center;  
-
+    align-items: center;
+    
   }
 
   .play-button {
@@ -18,15 +18,27 @@
   .retry-button {
     width: 15vw;
     filter: drop-shadow(0 0 10px gray);
+    transition: filter 0.3s linear, opacity 0.3s linear;
     animation: breathing 2s infinite linear, fadeIn 3s ease-in;
+  }
+
+  .retry-button:hover {
+    filter: drop-shadow( 0 0 40px white);
+    opacity: 0.7;
   }
 
   .start-button{
     transition: filter 0.3s linear;
+    animation: breathing 2s infinite linear, fadeIn 1s linear;
   }
 
   .start-button:hover {
     filter: drop-shadow(0 0 5px red);
+  }
+
+  img.button {
+    -webkit-user-drag: none;
+    user-select: none;
   }
 
   img.button:hover {
@@ -36,10 +48,7 @@
   .breathing {
     animation: breathing 2s infinite linear, fadeIn 1s linear;
   }
-  
-  .gradient-overlay {
-  }
-
+ 
   @keyframes fadeIn {
     0% {
       opacity: 0;

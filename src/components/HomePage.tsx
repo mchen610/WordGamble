@@ -11,7 +11,7 @@ export default function HomePage() {
                 <Header mode="dark"/>
 
                 <Link_Button
-                    className="button rounded start-button breathing"
+                    className="button rounded start-button"
                     img_link="images/start-button.png"
                     redir_link="/play"
                 />

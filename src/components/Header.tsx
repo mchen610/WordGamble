@@ -15,7 +15,7 @@ export default function Header({ mode }: IHeader) {
             className={`navbar navbar-expand-lg py-1 fixed-top border-bottom border-2 ${classNames[mode]}`}
         >
             <div className="container d-flex justify-content-center">
-                <Link className="nav-link px-3 navbar-brand" to="" id="Home">
+                <Link className="nav-link px-3 navbar-brand" to="/" id="Home">
                     Word Gamble
                 </Link>
             </div>

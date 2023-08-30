@@ -8,8 +8,8 @@ import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-const letters: string[] = "ABCDEFGHIJK".split("");
-const duration = 5;
+const letters: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const duration = 10;
 let words: string[] = [];
 
 await fetch(rawWords)
@@ -55,6 +55,8 @@ export default function PlayPage() {
 
     const [validWords, setValidWords] = useState<string[]>([]);
 
+    const [newValidWords, setNewValidWords] = useState<string[]>([]);
+
     const handleFinished = () => {
         //horizontal
         for (let i = 0; i < finalCenter.length; i++) {
@@ -83,22 +85,6 @@ export default function PlayPage() {
         ]);
     };
 
-    if (
-        finalWords.length === 0 &&
-        finalLeft.length > 0 &&
-        finalCenter.length > 0 &&
-        finalRight.length > 0
-    ) {
-        handleFinished();
-        setFinished(true);
-    } else if (finished && validWords.length === 0) {
-        for (let i = 0; i < finalWords.length; i++) {
-            if (words.includes(finalWords[i])) {
-                setValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
-            }
-        }
-    }
-
     const setFinal = (
         place: "left" | "center" | "right",
         letterIndex: number
@@ -115,6 +101,26 @@ export default function PlayPage() {
             );
         }
     };
+
+    
+    if (
+        finalWords.length === 0 &&
+        finalLeft.length > 0 &&
+        finalCenter.length > 0 &&
+        finalRight.length > 0
+    ) {
+        handleFinished();
+        setFinished(true);
+
+    } else if (finished) {
+        for (let i = 0; i < finalWords.length; i++) {
+            if (words.includes(finalWords[i])) {
+                setValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
+                setNewValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
+            }
+        }
+        setFinished(false);
+    }
 
     const slotCol = (
         place: "left" | "center" | "right",
@@ -170,17 +176,45 @@ export default function PlayPage() {
         );
     };
 
+    const randLeft = () => {
+        let leftOrRight = Math.floor(Math.random() * 2)%2===0;
+        let offset = Math.floor(Math.random() * 20) + 10;
+        return leftOrRight ? 100-offset : offset;
+    }
+    
+    const randTop = () => {
+        let topOrBot = Math.floor(Math.random() * 2) % 2 === 0;
+        let offset = Math.floor(Math.random() * 20) + 20;
+        return topOrBot ? 100 - offset : offset;
+    }
+
+    const randAngle = () => {
+        return Math.floor(Math.random() * 2) % 2 === 0 ? 30 : -30;
+    }
+
+
     const [startTime, setStartTime] = useState(0);
 
-
-
     return (
-        <>  
+        <>
             <title>Play</title>
             <Header mode="light" />
             <div className="play-container">
+                {newValidWords.map((word) => (
+                <div className="word-container" key={word} style={{ transform: `rotate(${randAngle()}deg)`, top: `${randTop()}%`, left: `${randLeft()}%` }}>
+                        {word.split("").map((letter, index) => (
+                            <img
+                                src={"images/letters/" + letter + ".svg"}
+                                alt={"This was the letter " + { letter }}
+                                key={index}
+                            />
+                        ))}
+                    </div>
+                ))}
+                <span className="play-bg" />
                 <div className="machine">
-                    <span className="bg" />
+                    <span className="machine-front" />
+
                     <div className="slot left">
                         {slotCol("left", startTime)}
                     </div>
@@ -216,7 +250,7 @@ export default function PlayPage() {
                                 setFinalCenter([]);
                                 setFinalRight([]);
                                 setFinalWords([]);
-                                setFinished(false);
+                                setNewValidWords([]);
                             }}
                         />
                     </div>
