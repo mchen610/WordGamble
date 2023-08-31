@@ -9,7 +9,7 @@ import { Test } from "./components/Test";
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/play" element={<PlayPage />} />
             <Route path="/test" element={<Test />} />
