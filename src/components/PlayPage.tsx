@@ -12,7 +12,7 @@ const letters: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const duration = 10;
 let words: string[] = [];
 
-await fetch(rawWords)
+fetch(rawWords)
     .then((response) => response.text())
     .then((content) => {
         words = content.split("\r\n");
@@ -102,7 +102,6 @@ export default function PlayPage() {
         }
     };
 
-    
     if (
         finalWords.length === 0 &&
         finalLeft.length > 0 &&
@@ -111,14 +110,20 @@ export default function PlayPage() {
     ) {
         handleFinished();
         setFinished(true);
-
     } else if (finished) {
         for (let i = 0; i < finalWords.length; i++) {
             if (words.includes(finalWords[i])) {
-                setValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
-                setNewValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
+                setValidWords((prevValidWords) => [
+                    ...prevValidWords,
+                    finalWords[i],
+                ]);
+                setNewValidWords((prevValidWords) => [
+                    ...prevValidWords,
+                    finalWords[i],
+                ]);
             }
         }
+        console.log(validWords);
         setFinished(false);
     }
 
@@ -177,21 +182,20 @@ export default function PlayPage() {
     };
 
     const randLeft = () => {
-        let leftOrRight = Math.floor(Math.random() * 2)%2===0;
+        let leftOrRight = Math.floor(Math.random() * 2) % 2 === 0;
         let offset = Math.floor(Math.random() * 20) + 10;
-        return leftOrRight ? 100-offset : offset;
-    }
-    
+        return leftOrRight ? 100 - offset : offset;
+    };
+
     const randTop = () => {
         let topOrBot = Math.floor(Math.random() * 2) % 2 === 0;
         let offset = Math.floor(Math.random() * 20) + 20;
         return topOrBot ? 100 - offset : offset;
-    }
+    };
 
     const randAngle = () => {
         return Math.floor(Math.random() * 2) % 2 === 0 ? 30 : -30;
-    }
-
+    };
 
     const [startTime, setStartTime] = useState(0);
 
@@ -201,7 +205,15 @@ export default function PlayPage() {
             <Header mode="light" />
             <div className="play-container">
                 {newValidWords.map((word) => (
-                <div className="word-container" key={word} style={{ transform: `rotate(${randAngle()}deg)`, top: `${randTop()}%`, left: `${randLeft()}%` }}>
+                    <div
+                        className="word-container"
+                        key={word}
+                        style={{
+                            transform: `rotate(${randAngle()}deg)`,
+                            top: `${randTop()}%`,
+                            left: `${randLeft()}%`,
+                        }}
+                    >
                         {word.split("").map((letter, index) => (
                             <img
                                 src={"images/letters/" + letter + ".svg"}
