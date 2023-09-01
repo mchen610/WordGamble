@@ -9,7 +9,7 @@ import Header from "./Header";
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
 const letters: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const duration = 10;
+const duration = 3;
 let words: string[] = [];
 
 fetch(rawWords)
