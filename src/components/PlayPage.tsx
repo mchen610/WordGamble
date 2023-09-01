@@ -172,8 +172,8 @@ export default function PlayPage() {
             >
                 {listDict[place].map((letter, index) => (
                     <img
-                        src={"images/letters/" + letter + ".svg"}
-                        alt={"This was the letter " + { letter }}
+                        src={"src/images/letters/" + letter + ".svg"}
+                        alt={"src/images/letters/" + letter + ".svg"}
                         key={index}
                     />
                 ))}
@@ -216,8 +216,8 @@ export default function PlayPage() {
                     >
                         {word.split("").map((letter, index) => (
                             <img
-                                src={"images/letters/" + letter + ".svg"}
-                                alt={"This was the letter " + { letter }}
+                                src={"src/images/letters/" + letter + ".svg"}
+                                alt={"src/images/letters/" + letter + ".svg"}
                                 key={index}
                             />
                         ))}
@@ -240,8 +240,10 @@ export default function PlayPage() {
                     {startTime === 0 && (
                         <Button
                             className="button play-button"
-                            imgLink="images/play-button.svg"
-                            onClickHandler={() => setStartTime(performance.now())}
+                            imgLink="src/images/play-button.svg"
+                            onClickHandler={() =>
+                                setStartTime(performance.now())
+                            }
                         />
                     )}
                 </div>
@@ -250,7 +252,7 @@ export default function PlayPage() {
                     <div className="retry-container">
                         <Button
                             className="button retry-button"
-                            imgLink="images/retry-button.png"
+                            imgLink="src/images/retry-button.png"
                             onClickHandler={() => {
                                 setListDict({
                                     left: newletterList(),
