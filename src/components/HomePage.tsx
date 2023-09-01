@@ -12,7 +12,7 @@ export default function HomePage() {
 
                 <Link_Button
                     className="button rounded start-button"
-                    imgLink="src/images/start-button.png"
+                    imgLink="images/start-button.png"
                     redirectLink="/play"
                 />
 
