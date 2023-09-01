@@ -240,8 +240,8 @@ export default function PlayPage() {
                     {startTime === 0 && (
                         <Button
                             className="button play-button"
-                            img_link="images/play-button.svg"
-                            func={() => setStartTime(performance.now())}
+                            imgLink="images/play-button.svg"
+                            onClickHandler={() => setStartTime(performance.now())}
                         />
                     )}
                 </div>
@@ -250,8 +250,8 @@ export default function PlayPage() {
                     <div className="retry-container">
                         <Button
                             className="button retry-button"
-                            img_link="images/retry-button.png"
-                            func={() => {
+                            imgLink="images/retry-button.png"
+                            onClickHandler={() => {
                                 setListDict({
                                     left: newletterList(),
                                     center: newletterList(),

@@ -12,8 +12,8 @@ export default function HomePage() {
 
                 <Link_Button
                     className="button rounded start-button"
-                    img_link="images/start-button.png"
-                    redir_link="/play"
+                    imgLink="images/start-button.png"
+                    redirectLink="/play"
                 />
 
                 <Footer mode="light"/>
