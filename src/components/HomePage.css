@@ -2,7 +2,7 @@
 
 div.home::before {    
   content: "";
-  background-image: url('images/start-bg.png');
+  background-image: url('/images/start-bg.png');
   background-size: cover;
   position: absolute;
   top: 0px;
