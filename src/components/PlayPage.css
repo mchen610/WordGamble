@@ -32,7 +32,7 @@
 
 
 span.play-bg {
-    background-image: url("images/play-bg.png");
+    background-image: url("/images/play-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
@@ -42,7 +42,7 @@ span.play-bg {
 }
 
 .machine {
-    background-image: url("images/machine-bg.png");
+    background-image: url("/images/machine-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
@@ -58,7 +58,7 @@ span.machine-front {
     height: 106%;
     top: -1;
     position: absolute;
-    background-image: url("images/machine-front.svg");
+    background-image: url("/images/machine-front.svg");
     background-repeat: no-repeat;
     background-size: cover;
 }       
