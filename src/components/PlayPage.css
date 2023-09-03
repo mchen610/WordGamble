@@ -38,17 +38,23 @@ span.play-bg {
     overflow: hidden;
     position: absolute;
     width: 102vw;
-    height: 51vw;
+    height: 47.94vw;
 }
 
 .machine {
-    background-image: url("/images/machine-bg.png");
     background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
-    width: 17vw;
-    height: 16vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.columns-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,20 +62,16 @@ span.play-bg {
 
 span.machine-front {
     width: 100%;
-    height: 106%;
-    top: -1;
+    height: 100%;
+    outline: 0.7vw solid RGB(43, 43, 43);
     position: absolute;
-    background-image: url("/images/machine-front.png");
-    background-repeat: no-repeat;
-    background-size: cover;
 }       
 
 .slot {
     position: relative;
     object-fit: cover;
     overflow: hidden;
-    width: 30%; 
-    height: 98%;
+    height: 100%;
     padding-top: 1%;
     background-image: url("/images/column-bg.png");
     background-repeat: no-repeat;
@@ -103,7 +105,7 @@ span.machine-front {
     cursor: default;
 }
 
-.slot-container img {
+.slot-container img, .word-container img {
     -webkit-user-drag: none;
     user-select: none;
     width: 100%;
@@ -113,7 +115,7 @@ span.machine-front {
 }
 
 .slot + .slot {
-    margin-left: 2%;
+    margin-left: 0.5vw;
 }
 
 .play-container .retry-container {
@@ -129,7 +131,7 @@ span.machine-front {
     }
 
     100% {
-        transform: translateY(-89.655%);
+        transform: translateY(-50%);
     }
 
 }

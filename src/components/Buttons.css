@@ -20,6 +20,7 @@
     filter: drop-shadow(0 0 10px gray);
     transition: filter 0.3s linear, opacity 0.3s linear;
     animation: breathing 2s infinite linear, fadeIn 3s ease-in;
+    z-index: 100;
   }
 
   .retry-button:hover {
