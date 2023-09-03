@@ -43,6 +43,7 @@ span.play-bg {
 
 .machine {
     background-image: url("/images/machine-bg.png");
+    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
@@ -58,7 +59,7 @@ span.machine-front {
     height: 106%;
     top: -1;
     position: absolute;
-    background-image: url("/images/machine-front.svg");
+    background-image: url("/images/machine-front.png");
     background-repeat: no-repeat;
     background-size: cover;
 }       
@@ -70,12 +71,19 @@ span.machine-front {
     width: 30%; 
     height: 98%;
     padding-top: 1%;
+    background-image: url("/images/column-bg.png");
+    background-repeat: no-repeat;
+    background-size: 120% 110%; 
+    background-position: center;
 }
 
 
 
 .slot-container {
+    display: flex;
     flex-direction: column; 
+    align-items: center;
+    justify-content: center;
     transition: transform 5s linear !important;
 }
 
@@ -98,7 +106,7 @@ span.machine-front {
 .slot-container img {
     -webkit-user-drag: none;
     user-select: none;
-    max-width: 100%;
+    width: 100%;
     /* Make the image's width match the width of the container */
     height: auto;
     /* Let the height adjust based on the image's aspect ratio */

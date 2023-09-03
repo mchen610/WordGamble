@@ -1,8 +1,9 @@
 import "./PlayPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classNames from "classnames";
 import rawWords from "./words.txt";
 import { Button } from "./Buttons";
+import { Letter, Word } from "./Letter";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -37,7 +38,7 @@ function newletterList() {
 }
 
 export default function PlayPage() {
-    const [listDict, setListDict] = useState({
+    const [colLists, setColLists] = useState({
         left: newletterList(),
         center: newletterList(),
         right: newletterList(),
@@ -51,11 +52,30 @@ export default function PlayPage() {
 
     const [finalWords, setFinalWords] = useState<string[]>([]);
 
-    const [finished, setFinished] = useState(false);
-
     const [validWords, setValidWords] = useState<string[]>([]);
 
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
+
+    const finalColumnList: string[][] = [];
+
+    const handleFinishedCol = (finalColumn: string[]) => {
+        finalColumnList.push(finalColumn);
+    };
+
+    useEffect(() => {
+        for (let i = 0; i < finalWords.length; i++) {
+            if (words.includes(finalWords[i])) {
+                setValidWords((prevValidWords) => [
+                    ...prevValidWords,
+                    finalWords[i],
+                ]);
+                setNewValidWords((prevValidWords) => [
+                    ...prevValidWords,
+                    finalWords[i],
+                ]);
+            }
+        }
+    }, [finalWords]);
 
     const handleFinished = () => {
         //horizontal
@@ -90,42 +110,17 @@ export default function PlayPage() {
         letterIndex: number
     ) => {
         if (place === "left") {
-            setFinalLeft(listDict["left"].slice(letterIndex, letterIndex + 3));
+            setFinalLeft(colLists["left"].slice(letterIndex, letterIndex + 3));
         } else if (place === "center") {
             setFinalCenter(
-                listDict["center"].slice(letterIndex, letterIndex + 3)
+                colLists["center"].slice(letterIndex, letterIndex + 3)
             );
         } else if (place === "right") {
             setFinalRight(
-                listDict["right"].slice(letterIndex, letterIndex + 3)
+                colLists["right"].slice(letterIndex, letterIndex + 3)
             );
         }
     };
-
-    if (
-        finalWords.length === 0 &&
-        finalLeft.length > 0 &&
-        finalCenter.length > 0 &&
-        finalRight.length > 0
-    ) {
-        handleFinished();
-        setFinished(true);
-    } else if (finished) {
-        for (let i = 0; i < finalWords.length; i++) {
-            if (words.includes(finalWords[i])) {
-                setValidWords((prevValidWords) => [
-                    ...prevValidWords,
-                    finalWords[i],
-                ]);
-                setNewValidWords((prevValidWords) => [
-                    ...prevValidWords,
-                    finalWords[i],
-                ]);
-            }
-        }
-        console.log(validWords);
-        setFinished(false);
-    }
 
     const slotCol = (
         place: "left" | "center" | "right",
@@ -156,7 +151,7 @@ export default function PlayPage() {
                                     letters.length) +
                                 1;
                             let newOffset =
-                                (letterIndex / listDict[place].length) * 100;
+                                (letterIndex / colLists[place].length) * 100;
                             console.log(newOffset);
                             console.log(letterIndex);
                             setOffset(newOffset);
@@ -170,16 +165,19 @@ export default function PlayPage() {
                     { started: startTime > 0 }
                 )}
             >
-                {listDict[place].map((letter, index) => (
-                    <img
-                        src={"images/letters/" + letter + ".svg"}
-                        alt={"images/letters/" + letter + ".svg"}
-                        key={index}
-                    />
-                ))}
+                {colLists[place].map((letter, index) => Letter(letter, index))};
             </div>
         );
     };
+
+    if (
+        finalWords.length === 0 &&
+        finalLeft.length > 0 &&
+        finalCenter.length > 0 &&
+        finalRight.length > 0
+    ) {
+        handleFinished();
+    }
 
     const randLeft = () => {
         let leftOrRight = Math.floor(Math.random() * 2) % 2 === 0;
@@ -214,38 +212,16 @@ export default function PlayPage() {
                             left: `${randLeft()}%`,
                         }}
                     >
-                        {word.split("").map((letter, index) => (
-                            <img
-                                src={"images/letters/" + letter + ".svg"}
-                                alt={"images/letters/" + letter + ".svg"}
-                                key={index}
-                            />
-                        ))}
+                        {Word(word)}
                     </div>
                 ))}
                 <span className="play-bg" />
                 <div className="machine">
                     <span className="machine-front" />
 
-                    <div className="slot left">
-                        {slotCol("left", startTime)}
-                    </div>
-                    <div className="slot mid">
-                        {slotCol("center", startTime)}
-                    </div>
-                    <div className="slot right">
-                        {slotCol("right", startTime)}
-                    </div>
-                    <div className="line" />
-                    {startTime === 0 && (
-                        <Button
-                            className="button play-button"
-                            imgLink="images/play-button.svg"
-                            onClickHandler={() =>
-                                setStartTime(performance.now())
-                            }
-                        />
-                    )}
+                    <div className="slot">{slotCol("left", startTime)}</div>
+                    <div className="slot">{slotCol("center", startTime)}</div>
+                    <div className="slot">{slotCol("right", startTime)}</div>
                 </div>
 
                 {startTime > 0 && (
@@ -254,7 +230,7 @@ export default function PlayPage() {
                             className="button retry-button"
                             imgLink="images/retry-button.png"
                             onClickHandler={() => {
-                                setListDict({
+                                setColLists({
                                     left: newletterList(),
                                     center: newletterList(),
                                     right: newletterList(),
@@ -271,6 +247,13 @@ export default function PlayPage() {
                 )}
             </div>
             <Footer mode="dark" />
+            {startTime === 0 && (
+                <Button
+                    className="button play-button"
+                    imgLink="images/play-button.svg"
+                    onClickHandler={() => setStartTime(performance.now())}
+                />
+            )}
         </>
     );
 }
