@@ -41,7 +41,6 @@ div.points {
     font-family: "Cascadia Mono";
     font-size: 10vh;
 
-
     color: white;
     filter: drop-shadow(0 0 2vh black);
 }
@@ -80,6 +79,7 @@ span.machine-front {
     height: 100%;
     outline: 0.7vw solid RGB(43, 43, 43);
     position: absolute;
+    filter: drop-shadow(0 20px 20px white);
 }       
 
 .slot {

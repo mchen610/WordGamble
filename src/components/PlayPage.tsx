@@ -24,7 +24,10 @@ export default function PlayPage() {
     const [animation, setAnimation] = useState<string>("none");
 
     useEffect(() => {
-        setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
+        if (validWords.length > 0) {
+            console.log(validWords);
+            setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
+        }
     }, [validWords]);
 
     //changing machine key resets all props in machine
