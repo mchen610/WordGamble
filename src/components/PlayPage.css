@@ -26,7 +26,7 @@
 }
 
 .word-container img {
-    animation: breathing 0.5s linear, word-pop 1s linear;
+    animation: breathing 0.1s ease-in, word-pop 0.5s linear;
     opacity: 0;
 }
 
@@ -148,13 +148,24 @@ span.machine-front {
         opacity: 0;
     }
 
-    50% {
-        filter: drop-shadow(0 0 1px yellow);
+    10% {
+        filter: drop-shadow(0 0 7px #FF0000);
         opacity: 1;
     }
     
+    30% {
+        filter: drop-shadow(0 0 7px yellow);
+    }
+    
+    50% {
+        filter: drop-shadow(0 0 7px lightskyblue);
+    }
+    
+    70% {
+        filter: drop-shadow(0 0 7px fuchsia);
+    }
+
     100% {
-        filter: drop-shadow(0 0 100px black);
         opacity: 0;
     }
 }
