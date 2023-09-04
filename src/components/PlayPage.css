@@ -35,12 +35,15 @@ div.points {
     align-items: center;
     justify-content: center;
     position: absolute;
-    z-index: 100;
+    max-width: 15vw;
+    height: auto;
+
     font-family: "Cascadia Mono";
-    font-size: 10vh; 
+    font-size: 10vh;
+
+
     color: white;
     filter: drop-shadow(0 0 2vh black);
-    
 }
 
 span.play-bg {

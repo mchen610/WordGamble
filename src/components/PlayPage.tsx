@@ -16,15 +16,15 @@ export default function PlayPage() {
     const addValidWords = (words: string[]) => {
         console.log(words);
         setValidWords(validWords.concat(words));
-        for(var word of words) {
-            setTotalPoints(totalPoints + word.length*10);
+        for (var word of words) {
+            setTotalPoints(totalPoints + Math.floor(word.length ** 1.5) * 10);
         }
     };
 
-    const [animation, setAnimation] = useState<string>('none');
+    const [animation, setAnimation] = useState<string>("none");
 
     useEffect(() => {
-        setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`)
+        setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
     }, [validWords]);
 
     //changing machine key resets all props in machine
@@ -33,7 +33,10 @@ export default function PlayPage() {
     const startNewGame = () => {
         setStartTime(performance.now());
         setMachineKey(machineKey + 1);
-        setAnimation('none');
+        setAnimation("none");
+        if (startTime > 0) {
+            numColumns = Math.floor(Math.random() * 4) + 3;
+        }
     };
 
     return (
@@ -44,7 +47,10 @@ export default function PlayPage() {
                 <span className="play-bg" />
                 <div
                     className="points"
-                    style={{ top: `${35 - numColumns * 5.3}vh`, animation: animation }}
+                    style={{
+                        top: `${35 - numColumns * 5.3}vh`,
+                        animation: animation,
+                    }}
                 >
                     {totalPoints}
                 </div>

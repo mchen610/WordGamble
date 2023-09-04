@@ -1,19 +1,9 @@
 import { useState, useEffect } from "react";
 import { SlotColumn } from "./SlotColumn";
-import rawWords from "/words.txt";
-import { randAngle, randLeft, randTop } from "./Random";
+import wordList from "./words.json";
 import { Word } from "./Word";
 
-let wordList: string[] = [];
 
-fetch(rawWords)
-    .then((response) => response.text())
-    .then((content) => {
-        wordList = content.split("\r\n");
-    })
-    .catch((error) => {
-        console.error("Error fetching file:", error);
-    });
 
 const wordsIn = (word: string) => {
     let words: string[] = [];
@@ -63,7 +53,6 @@ export const SlotMachine = ({
         let newList=finalColumnList.slice();
         newList[colIndex] = finalColumn;
         setFinalColumnList(newList);
-        console.log("finished");
     };
 
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
@@ -73,6 +62,7 @@ export const SlotMachine = ({
 
     useEffect(() => {
         if (finished===true) {
+            console.log(wordList);
             let newWords: string[] = [];
             let risingDiagonal = "";
             let fallingDiagonal = "";
