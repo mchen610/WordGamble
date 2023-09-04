@@ -36,7 +36,6 @@ export const SlotColumn = ({
     if (newStartTime != startTime) {
         setStopped(false);
         setStartTime(newStartTime);
-        console.log(letterOrder);
     }
 
     return (

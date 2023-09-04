@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SlotColumn } from "./SlotColumn";
-import rawWords from "./words.txt";
+import rawWords from "/words.txt";
 import { randAngle, randLeft, randTop } from "./Random";
 import { Word } from "./Word";
 

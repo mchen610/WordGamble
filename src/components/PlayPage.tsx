@@ -1,24 +1,12 @@
 import "./PlayPage.css";
-import { useState, useEffect } from "react";
-import rawWords from "./words.txt";
+import { useState } from "react";
 import { Button } from "./Buttons";
-import { Word } from "./Word";
 import { SlotMachine } from "./SlotMachine";
 import Footer from "./Footer";
 import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-let words: string[] = [];
-
-fetch(rawWords)
-    .then((response) => response.text())
-    .then((content) => {
-        words = content.split("\r\n");
-    })
-    .catch((error) => {
-        console.error("Error fetching file:", error);
-    });
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);

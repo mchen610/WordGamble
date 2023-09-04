@@ -3,7 +3,6 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Link_Button from "./Buttons";
 import { useEffect } from "react";
-import { google } from "google-auth-library";
 
 export default function HomePage() {
      useEffect(() => {
