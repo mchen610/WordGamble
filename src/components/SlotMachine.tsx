@@ -16,7 +16,6 @@ fetch(rawWords)
     });
 
 const wordsIn = (word: string) => {
-    console.log(word);
     let words: string[] = [];
     for (let j = 0; j < word.length - 1; j++) {
         for (let k = 2; k <= word.length - j; k++) {
@@ -28,10 +27,11 @@ const wordsIn = (word: string) => {
     let realWords: string[] = [];
     for (let i = 0; i < words.length; i++) {
         if (wordList.includes(words[i])) {
+            console.log(words[i]);
             realWords.push(words[i]);
         }
     }
-    console.log(realWords);
+    
 
     return realWords;
 };
@@ -68,11 +68,11 @@ export const SlotMachine = ({
 
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
 
+
     const [finished, setFinished] = useState(false);
 
     useEffect(() => {
         if (finished===true) {
-            console.log("finished");
             let newWords: string[] = [];
             let risingDiagonal = "";
             let fallingDiagonal = "";
@@ -95,9 +95,11 @@ export const SlotMachine = ({
 
             newWords = newWords.concat(wordsIn(risingDiagonal));
             newWords = newWords.concat(wordsIn(fallingDiagonal));
-
-            setNewValidWords(newWords);
-            addValidWords(newWords);
+            
+            if (newWords.length > 0) {
+                setNewValidWords(newWords);
+                addValidWords(newWords);
+            }
             
         }
     }, [finished]);
@@ -128,9 +130,9 @@ export const SlotMachine = ({
                     className="word-container"
                     key={word + index}
                     style={{
-                        transform: `rotate(${randAngle()}deg)`,
-                        top: `${randTop()}%`,
-                        left: `${randLeft()}%`,
+                        transform: `rotate(${index % 2 === 0 ? -30 : 30}deg)`,
+                        top: `${30 + index * 10}%`,
+                        left: `${index % 2 === 0 ? 70 : 20}%`,
                     }}
                 >
                     {Word(word)}

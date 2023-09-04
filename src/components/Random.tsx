@@ -32,7 +32,7 @@ export const randAngle = () => {
 
 export const randLeft = () => {
     let leftOrRight = Math.floor(Math.random() * 2) % 2 === 0;
-    let offset = Math.floor((Math.random() / 0.1 / 10) * 10) + 10;
+    let offset = 20;
     offset = leftOrRight ? 100 - offset : offset;
     return offset;
 };
@@ -40,11 +40,19 @@ export const randLeft = () => {
 
 export const randTop = () => {
     let offset = 0;
-        offset = Math.floor((Math.random() / 0.1 / 10) * 80) + 10;
+        offset = Math.floor((Math.random() / 0.1 / 10) * 60) + 20;
     return offset;
 };
-
 
 export const randAngle = () => {
     return Math.floor(Math.random() * 2) % 2 === 0 ? 30 : -30;
 };
+
+export const randCoords = () => {
+    return {
+        left: randLeft(),
+        top: randTop()
+
+    };
+};
+

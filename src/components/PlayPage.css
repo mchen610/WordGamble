@@ -30,6 +30,18 @@
     opacity: 0;
 }
 
+div.points {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 100;
+    font-family: "Cascadia Mono";
+    font-size: 10vh; 
+    color: white;
+    filter: drop-shadow(0 0 2vh black);
+    
+}
 
 span.play-bg {
     background-image: url("/images/play-bg.png");
@@ -37,8 +49,8 @@ span.play-bg {
     background-size: cover;
     overflow: hidden;
     position: absolute;
-    width: 102vw;
-    height: 47.94vw;
+    width: 100vw;
+    height: 47vw;
 }
 
 .machine {
@@ -166,6 +178,6 @@ span.machine-front {
     }
 
     100% {
-        opacity: 0;
+        filter: drop-shadow(0 0 100px black);
     }
 }

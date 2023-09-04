@@ -1,5 +1,5 @@
 import "./PlayPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./Buttons";
 import { SlotMachine } from "./SlotMachine";
 import Footer from "./Footer";
@@ -7,22 +7,33 @@ import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
+let numColumns = 3;
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);
+    const [totalPoints, setTotalPoints] = useState<number>(0);
 
     const addValidWords = (words: string[]) => {
+        console.log(words);
         setValidWords(validWords.concat(words));
+        for(var word of words) {
+            setTotalPoints(totalPoints + word.length*10);
+        }
     };
 
-    const [startTime, setStartTime] = useState(0);
+    const [animation, setAnimation] = useState<string>('none');
+
+    useEffect(() => {
+        setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`)
+    }, [validWords]);
 
     //changing machine key resets all props in machine
     const [machineKey, setMachineKey] = useState(0);
-
+    const [startTime, setStartTime] = useState(0);
     const startNewGame = () => {
         setStartTime(performance.now());
         setMachineKey(machineKey + 1);
+        setAnimation('none');
     };
 
     return (
@@ -31,10 +42,15 @@ export default function PlayPage() {
             <Header mode="light" />
             <div className="play-container">
                 <span className="play-bg" />
-
+                <div
+                    className="points"
+                    style={{ top: `${35 - numColumns * 5.3}vh`, animation: animation }}
+                >
+                    {totalPoints}
+                </div>
                 <SlotMachine
                     startTime={startTime}
-                    numColumns={5}
+                    numColumns={numColumns}
                     key={machineKey}
                     addValidWords={addValidWords}
                 />
@@ -48,7 +64,10 @@ export default function PlayPage() {
                 )}
 
                 {startTime > 0 && (
-                    <div className="retry-container">
+                    <div
+                        className="retry-container"
+                        style={{ top: `${50 + numColumns * 5.5}vh` }}
+                    >
                         <Button
                             className="button retry-button"
                             imgLink="images/retry-button.png"
