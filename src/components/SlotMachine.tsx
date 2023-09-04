@@ -16,6 +16,7 @@ fetch(rawWords)
     });
 
 const wordsIn = (word: string) => {
+    console.log(word);
     let words: string[] = [];
     for (let j = 0; j < word.length - 1; j++) {
         for (let k = 2; k <= word.length - j; k++) {
@@ -30,7 +31,17 @@ const wordsIn = (word: string) => {
             realWords.push(words[i]);
         }
     }
+    console.log(realWords);
+
     return realWords;
+};
+
+const newEmptyLists = (numColumns: number) => {
+    let newList = [];
+    for (let i = 0; i < numColumns; i++) {
+        newList.push([]);
+    }
+    return newList;
 };
 
 interface ISlotMachineProps {
@@ -44,34 +55,25 @@ export const SlotMachine = ({
     startTime,
     addValidWords,
 }: ISlotMachineProps) => {
-    const [finalColumnList, setFinalColumnList] = useState<string[][]>([]);
+    const [finalColumnList, setFinalColumnList] = useState<string[][]>(
+        newEmptyLists(numColumns)
+    );
 
-    const handleFinishedCol = (finalColumn: string[]) => {
-        setFinalColumnList([...finalColumnList, finalColumn]);
+    const handleFinishedCol = (finalColumn: string[], colIndex: number) => {
+        let newList=finalColumnList.slice();
+        newList[colIndex] = finalColumn;
+        setFinalColumnList(newList);
+        console.log("finished");
     };
 
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
 
-    const addNewValidWords = (word: string) => {
-        setNewValidWords((prevValidWords) =>
-            prevValidWords.concat(wordsIn(word))
-        );
-        addValidWords(wordsIn(word));
-    };
-
     const [finished, setFinished] = useState(false);
 
     useEffect(() => {
-        if (
-            finalColumnList.length === numColumns &&
-            newValidWords.length === 0
-        ) {
-            setFinished(true);
-        }
-    }, [finalColumnList]);
-
-    useEffect(() => {
-        if (finished) {
+        if (finished===true) {
+            console.log("finished");
+            let newWords: string[] = [];
             let risingDiagonal = "";
             let fallingDiagonal = "";
 
@@ -81,20 +83,30 @@ export const SlotMachine = ({
                     row += finalColumnList[j][i];
                 }
 
-                addNewValidWords(row);
+                newWords = newWords.concat(wordsIn(row));
 
                 let col = finalColumnList[i].join("");
 
-                addNewValidWords(col);
+                newWords = newWords.concat(wordsIn(col));
 
                 risingDiagonal += finalColumnList[i][i];
                 fallingDiagonal += finalColumnList[i][numColumns - 1 - i];
             }
 
-            addNewValidWords(risingDiagonal);
-            addNewValidWords(fallingDiagonal);
+            newWords = newWords.concat(wordsIn(risingDiagonal));
+            newWords = newWords.concat(wordsIn(fallingDiagonal));
+
+            setNewValidWords(newWords);
+            addValidWords(newWords);
+            
         }
     }, [finished]);
+
+    useEffect(() => {
+        if (finalColumnList.every(list => list.length > 0) && newValidWords.length === 0) {
+            setFinished(true);
+        }
+    }, [finalColumnList]);
 
     const ColumnList = [];
 
@@ -104,6 +116,7 @@ export const SlotMachine = ({
                 newStartTime={startTime}
                 handleFinishedCol={handleFinishedCol}
                 numColumns={numColumns}
+                colIndex={i}
             />
         );
     }
@@ -113,7 +126,7 @@ export const SlotMachine = ({
             {newValidWords.map((word, index) => (
                 <div
                     className="word-container"
-                    key={word+index}
+                    key={word + index}
                     style={{
                         transform: `rotate(${randAngle()}deg)`,
                         top: `${randTop()}%`,

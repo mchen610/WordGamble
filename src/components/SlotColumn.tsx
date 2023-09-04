@@ -19,15 +19,17 @@ function newLetterList() {
 
 interface ISlotColumnProps {
     newStartTime: DOMHighResTimeStamp;
-    handleFinishedCol: (finalColumn: string[]) => void;
+    handleFinishedCol: (finalColumn: string[], colIndex: number) => void;
     numColumns: number;
+    colIndex: number;
 }
 
 export const SlotColumn = ({
     newStartTime,
     handleFinishedCol,
-    numColumns,
+    numColumns, colIndex
 }: ISlotColumnProps) => {
+    
     const [stopped, setStopped] = useState(false);
     const [offset, setOffset] = useState(0);
     const [startTime, setStartTime] = useState(0);
@@ -61,7 +63,7 @@ export const SlotColumn = ({
                             letterOrder.slice(
                                 letterIndex,
                                 letterIndex + numColumns
-                            )
+                            ), colIndex
                         );
                     },
                 })}
