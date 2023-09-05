@@ -127,7 +127,7 @@ span.machine-front {
     /* Make the image's width match the width of the container */
     height: auto;
     /* Let the height adjust based on the image's aspect ratio */
-    transition: filter 1s linear;
+    transition: filter 0.1s linear;
 }
 
 .slot + .slot {

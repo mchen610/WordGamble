@@ -24,6 +24,9 @@ export const SlotMachine = ({
     startTime,
     addValidWords,
 }: ISlotMachineProps) => {
+
+    const [wordCount, setWordCount] = useState(0);
+
     const wordsIn = (word: string, type: string, row: number, col: number) => {
         let words: string[] = [];
         for (let j = 0; j < word.length - 1; j++) {
@@ -36,11 +39,12 @@ export const SlotMachine = ({
         let realWords: string[] = [];
         for (let i = 0; i < words.length; i++) {
             if (wordList.includes(words[i])) {
-                let randomColor =
-                    colors[Math.floor(Math.random() * colors.length)];
+                let color = colors[realWords.length % colors.length];
 
                 console.log(words[i]);
                 realWords.push(words[i]);
+                setWordCount((prevWordCount) => prevWordCount + 1);
+                
                 setColumnStyleList((columnList) => {
                     let index = word.indexOf(words[i]);
                     for (let j = index; j < index + words[i].length; j++) {
@@ -65,8 +69,8 @@ export const SlotMachine = ({
                         }
 
                         columnList[newRow][newCol] = {
-                            transitionDelay: `100s`,
-                            filter: `drop-shadow(0 0 3px ${randomColor}) `,
+                            transitionDelay: `${wordCount-1}s`,
+                            filter: `${columnList[newRow][newCol].filter}drop-shadow(0 0 3px ${color}) `,
                         };
                     }
 

@@ -7,7 +7,7 @@ import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-let numColumns = 3;
+let numColumns = 7;
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);
@@ -37,9 +37,9 @@ export default function PlayPage() {
         setStartTime(performance.now());
         setMachineKey(machineKey + 1);
         setAnimation("none");
-        if (startTime > 0) {
+        /*if (startTime > 0) {
             numColumns = Math.floor(Math.random() * 4) + 3;
-        }
+        }*/
     };
 
     return (
