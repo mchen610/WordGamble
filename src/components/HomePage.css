@@ -9,6 +9,16 @@ div.home::before {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  opacity: 0.3;
+  opacity: 0.6;
+  animation: fade-in 2s linear;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 0.6;
+  }
+}

@@ -92,6 +92,7 @@ span.machine-front {
     background-repeat: no-repeat;
     background-size: 120% 110%; 
     background-position: center;
+
 }
 
 
@@ -100,8 +101,7 @@ span.machine-front {
     display: flex;
     flex-direction: column; 
     align-items: center;
-    justify-content: center;
-    transition: transform 5s linear !important;
+    justify-content: center;    
 }
 
 .slot-container.started{
@@ -127,6 +127,7 @@ span.machine-front {
     /* Make the image's width match the width of the container */
     height: auto;
     /* Let the height adjust based on the image's aspect ratio */
+    transition: filter 1s linear;
 }
 
 .slot + .slot {

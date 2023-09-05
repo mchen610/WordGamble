@@ -20,7 +20,7 @@ export default function Link_Button({
     redirectLink,
 }: ILinkButtonProps) {
     return (
-        <div className="centered">
+        <div className="centered link-button-container">
             <Link to={redirectLink} className={className}>
                 <img src={imgLink} alt={imgLink} className="rounded button" />
             </Link>
@@ -30,7 +30,7 @@ export default function Link_Button({
 
 export function Button({ className, imgLink, onClickHandler }: IButtonProps) {
     return (
-        <div className="centered">
+        <div className="centered button-container">
             <img
                 src={imgLink}
                 alt={imgLink}

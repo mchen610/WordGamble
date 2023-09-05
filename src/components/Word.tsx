@@ -1,9 +1,10 @@
-export const Letter = (letter: string, index: number) => {
+export const Letter = (letter: string, index: number, styles: Object = {}) => {
     return (
         <img
             src={"images/letters/" + letter + ".svg"}
             alt={"images/letters/" + letter + ".svg"}
             key={`${letter}${index}`}
+            style={styles}
         />
     );
 };
