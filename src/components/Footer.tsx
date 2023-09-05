@@ -38,7 +38,7 @@ function Footer({ mode }: IFooter) {
             >
                 <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                     {footerLinks.map((item) => (
-                        <Link className="nav-link px-3" to={item.path} id={item.title}>
+                        <Link className="nav-link px-3" to={item.path} key={item.title}>
                             <li>{item.title}</li>
                         </Link>
                     ))}

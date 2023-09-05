@@ -1,227 +1,91 @@
 import "./PlayPage.css";
-import { useState } from "react";
-import classNames from "classnames";
-import rawWords from "./words.txt";
+import { useState, useEffect } from "react";
 import { Button } from "./Buttons";
+import { SlotMachine } from "./SlotMachine";
 import Footer from "./Footer";
 import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-const letters: string[] = "ABCDEFGHIJK".split("");
-const duration = 5;
-let words: string[] = [];
-
-await fetch(rawWords)
-    .then((response) => response.text())
-    .then((content) => {
-        words = content.split("\r\n");
-    })
-    .catch((error) => {
-        console.error("Error fetching file:", error);
-    });
-
-function shuffle(list: string[]) {
-    return list
-        .map((item) => ({ item, value: Math.random() }))
-        .sort((a, b) => a.value - b.value)
-        .map(({ item }) => item);
-}
-
-function newletterList() {
-    let newLetters = shuffle(letters);
-    newLetters.push(newLetters[0]);
-    newLetters.push(newLetters[1]);
-    newLetters.push(newLetters[2]);
-    return newLetters;
-}
+let numColumns = 3;
 
 export default function PlayPage() {
-    const [listDict, setListDict] = useState({
-        left: newletterList(),
-        center: newletterList(),
-        right: newletterList(),
-    });
-
-    const [finalLeft, setFinalLeft] = useState<string[]>([]);
-
-    const [finalCenter, setFinalCenter] = useState<string[]>([]);
-
-    const [finalRight, setFinalRight] = useState<string[]>([]);
-
-    const [finalWords, setFinalWords] = useState<string[]>([]);
-
-    const [finished, setFinished] = useState(false);
-
     const [validWords, setValidWords] = useState<string[]>([]);
+    const [totalPoints, setTotalPoints] = useState<number>(0);
 
-    const handleFinished = () => {
-        //horizontal
-        for (let i = 0; i < finalCenter.length; i++) {
-            setFinalWords((prevWords) => [
-                ...prevWords,
-                finalLeft[i] + finalCenter[i] + finalRight[i],
-            ]);
-        }
-
-        //vertical
-        setFinalWords((prevWords) => [
-            ...prevWords,
-            finalLeft.join(""),
-            finalCenter.join(""),
-            finalRight.join(""),
-        ]);
-
-        //diagonal
-        setFinalWords((prevWords) => [
-            ...prevWords,
-            finalLeft[0] + finalCenter[1] + finalRight[2],
-        ]);
-        setFinalWords((prevWords) => [
-            ...prevWords,
-            finalLeft[2] + finalCenter[1] + finalRight[0],
-        ]);
-    };
-
-    if (
-        finalWords.length === 0 &&
-        finalLeft.length > 0 &&
-        finalCenter.length > 0 &&
-        finalRight.length > 0
-    ) {
-        handleFinished();
-        setFinished(true);
-    } else if (finished && validWords.length === 0) {
-        for (let i = 0; i < finalWords.length; i++) {
-            if (words.includes(finalWords[i])) {
-                setValidWords((prevValidWords) => [...prevValidWords, finalWords[i]]);
-            }
-        }
-    }
-
-    const setFinal = (
-        place: "left" | "center" | "right",
-        letterIndex: number
-    ) => {
-        if (place === "left") {
-            setFinalLeft(listDict["left"].slice(letterIndex, letterIndex + 3));
-        } else if (place === "center") {
-            setFinalCenter(
-                listDict["center"].slice(letterIndex, letterIndex + 3)
-            );
-        } else if (place === "right") {
-            setFinalRight(
-                listDict["right"].slice(letterIndex, letterIndex + 3)
-            );
+    const addValidWords = (words: string[]) => {
+        console.log(words);
+        setValidWords(validWords.concat(words));
+        for (var word of words) {
+            setTotalPoints(totalPoints + Math.floor(word.length ** 1.5) * 10);
         }
     };
 
-    const slotCol = (
-        place: "left" | "center" | "right",
-        newStartTime: DOMHighResTimeStamp
-    ) => {
-        const [stopped, setStopped] = useState(false);
-        const [offset, setOffset] = useState(0);
-        const [startTime, setStartTime] = useState(0);
+    const [animation, setAnimation] = useState<string>("none");
 
-        if (newStartTime != startTime) {
-            setStopped(false);
-            setStartTime(newStartTime);
+    useEffect(() => {
+        if (validWords.length > 0) {
+            console.log(validWords);
+            setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
         }
+    }, [validWords]);
 
-        return (
-            <div
-                style={{
-                    animationDuration: String(duration) + "s",
-                    transform: stopped ? `translateY(-${offset}%)` : "",
-                }}
-                {...(startTime > 0 &&
-                    !stopped && {
-                        onClick: () => {
-                            let letterTime = (duration * 1000) / letters.length;
-                            let elapsedTime = performance.now() - startTime;
-                            let letterIndex =
-                                (Math.floor(elapsedTime / letterTime) %
-                                    letters.length) +
-                                1;
-                            let newOffset =
-                                (letterIndex / listDict[place].length) * 100;
-                            console.log(newOffset);
-                            console.log(letterIndex);
-                            setOffset(newOffset);
-                            setStopped(true);
-                            setFinal(place, letterIndex);
-                        },
-                    })}
-                className={classNames(
-                    "slot-container",
-                    { stopped: stopped },
-                    { started: startTime > 0 }
-                )}
-            >
-                {listDict[place].map((letter, index) => (
-                    <img
-                        src={"images/letters/" + letter + ".svg"}
-                        alt={"This was the letter " + { letter }}
-                        key={index}
-                    />
-                ))}
-            </div>
-        );
-    };
-
+    //changing machine key resets all props in machine
+    const [machineKey, setMachineKey] = useState(0);
     const [startTime, setStartTime] = useState(0);
-
-
+    const startNewGame = () => {
+        setStartTime(performance.now());
+        setMachineKey(machineKey + 1);
+        setAnimation("none");
+        if (startTime > 0) {
+            numColumns = Math.floor(Math.random() * 4) + 3;
+        }
+    };
 
     return (
-        <>  
+        <>
             <title>Play</title>
             <Header mode="light" />
             <div className="play-container">
-                <div className="machine">
-                    <span className="bg" />
-                    <div className="slot left">
-                        {slotCol("left", startTime)}
-                    </div>
-                    <div className="slot mid">
-                        {slotCol("center", startTime)}
-                    </div>
-                    <div className="slot right">
-                        {slotCol("right", startTime)}
-                    </div>
-                    <div className="line" />
-                    {startTime === 0 && (
-                        <Button
-                            className="button play-button"
-                            img_link="images/play-button.svg"
-                            func={() => setStartTime(performance.now())}
-                        />
-                    )}
+                <span className="play-bg" />
+                <div
+                    className="points"
+                    style={{
+                        top: `${35 - numColumns * 5.3}vh`,
+                        animation: animation,
+                    }}
+                >
+                    {totalPoints}
                 </div>
+                <SlotMachine
+                    startTime={startTime}
+                    numColumns={numColumns}
+                    key={machineKey}
+                    addValidWords={addValidWords}
+                />
+
+                {startTime === 0 && (
+                    <Button
+                        className="play-button"
+                        imgLink="images/play-button.svg"
+                        onClickHandler={startNewGame}
+                    />
+                )}
 
                 {startTime > 0 && (
-                    <div className="retry-container">
+                    <div
+                        className="retry-container"
+                        style={{ top: `${50 + numColumns * 5.5}vh` }}
+                    >
                         <Button
-                            className="button retry-button"
-                            img_link="images/retry-button.png"
-                            func={() => {
-                                setListDict({
-                                    left: newletterList(),
-                                    center: newletterList(),
-                                    right: newletterList(),
-                                });
-                                setStartTime(performance.now());
-                                setFinalLeft([]);
-                                setFinalCenter([]);
-                                setFinalRight([]);
-                                setFinalWords([]);
-                                setFinished(false);
-                            }}
+                            className="retry-button"
+                            imgLink="images/retry-button.png"
+                            onClickHandler={startNewGame}
                         />
                     </div>
                 )}
             </div>
+
             <Footer mode="dark" />
         </>
     );

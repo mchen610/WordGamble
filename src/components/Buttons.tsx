@@ -1,40 +1,41 @@
 import "./Buttons.css";
 import { Link } from "react-router-dom";
 
-interface Link_Props {
+interface ICommonProps {
     className: string;
-    img_link: string;
-    redir_link: string;
+    imgLink: string;
+}
+
+interface ILinkButtonProps extends ICommonProps {
+    redirectLink: string;
+}
+
+interface IButtonProps extends ICommonProps {
+    onClickHandler: () => void;
 }
 
 export default function Link_Button({
     className,
-    img_link,
-    redir_link,
-}: Link_Props) {
+    imgLink,
+    redirectLink,
+}: ILinkButtonProps) {
     return (
-        <div className="centered">
-            <Link to={redir_link} className={className}>
-                <img src={img_link} alt={img_link} className = "rounded" />
+        <div className="centered link-button-container">
+            <Link to={redirectLink} className={className}>
+                <img src={imgLink} alt={imgLink} className="rounded button" />
             </Link>
         </div>
     );
 }
 
-interface Props {
-    className: string;
-    img_link: string;
-    func: () => void;
-}
-
-export function Button({ className, img_link, func }: Props) {
+export function Button({ className, imgLink, onClickHandler }: IButtonProps) {
     return (
-        <div className="centered">
+        <div className="centered button-container">
             <img
-                src={img_link}
-                alt={img_link}
-                onClick={func}
-                className={`${className} gradient-overlay`}
+                src={imgLink}
+                alt={imgLink}
+                onClick={onClickHandler}
+                className={`${className} button gradient-overlay`}
             />
         </div>
     );

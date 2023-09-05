@@ -6,40 +6,64 @@
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
-    align-items: center;  
-
+    align-items: center;
+    
   }
 
-  .play-button {
-    animation: breathing 2s infinite linear, fadeIn 0.5s linear;
-    width: 20vw;
-  }
-  
-  .retry-button {
-    width: 15vw;
-    filter: drop-shadow(0 0 10px gray);
-    animation: breathing 2s infinite linear, fadeIn 3s ease-in;
-  }
-
-  .start-button{
-    transition: filter 0.3s linear;
-  }
-
-  .start-button:hover {
-    filter: drop-shadow(0 0 5px red);
+  img.button {
+    -webkit-user-drag: none;
+    user-select: none;
   }
 
   img.button:hover {
     cursor: pointer;
   }
 
+  .start-button img {
+    width: 30vw;
+  }
+  
+  .start-button {
+    transition: filter 0.3s linear;
+    animation: breathing 2s infinite linear, fadeIn 1s linear;
+  }
+
+  .start-button:hover {
+    filter: drop-shadow(0 0 5px red);
+  }
+
+
+
+  .play-button {
+    animation: breathing 2s infinite linear, fadeIn 0.5s linear;
+    width: 20vw;
+  }
+  
+
+
+  .retry-button {
+    width: 15vw;
+    filter: drop-shadow(0 0 10px gray);
+    transition: filter 0.1s linear, opacity 0.3s linear;
+    animation: breathing 2s infinite linear, fadeIn 3s ease-in;
+    z-index: 100;
+  }
+
+  .retry-button:hover {
+    filter: drop-shadow( 0 0 40px white);
+    opacity: 0.7;
+  }
+
+
+
+
+
+
+
   .breathing {
     animation: breathing 2s infinite linear, fadeIn 1s linear;
   }
-  
-  .gradient-overlay {
-  }
-
+ 
   @keyframes fadeIn {
     0% {
       opacity: 0;
