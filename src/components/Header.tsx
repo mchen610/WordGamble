@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-interface IHeader {
+interface IHeaderProps {
     mode: "light" | "dark";
 }
 
-export default function Header({ mode }: IHeader) {
+export default function Header({ mode }: IHeaderProps) {
     const classNames = {
         light: "bg-white navbar-light border-dark",
         dark: "bg-dark navbar-dark border-white",
