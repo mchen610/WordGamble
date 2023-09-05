@@ -9,6 +9,7 @@ lerna-debug.log*
 
 dist
 node_modules
+README.md
 
 *.local
 

@@ -10,11 +10,37 @@
     
   }
 
+  img.button {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  img.button:hover {
+    cursor: pointer;
+  }
+
+  .start-button img {
+    width: 30vw;
+  }
+  
+  .start-button {
+    transition: filter 0.3s linear;
+    animation: breathing 2s infinite linear, fadeIn 1s linear;
+  }
+
+  .start-button:hover {
+    filter: drop-shadow(0 0 5px red);
+  }
+
+
+
   .play-button {
     animation: breathing 2s infinite linear, fadeIn 0.5s linear;
     width: 20vw;
   }
   
+
+
   .retry-button {
     width: 15vw;
     filter: drop-shadow(0 0 10px gray);
@@ -28,23 +54,11 @@
     opacity: 0.7;
   }
 
-  .start-button{
-    transition: filter 0.3s linear;
-    animation: breathing 2s infinite linear, fadeIn 1s linear;
-  }
 
-  .start-button:hover {
-    filter: drop-shadow(0 0 5px red);
-  }
 
-  img.button {
-    -webkit-user-drag: none;
-    user-select: none;
-  }
 
-  img.button:hover {
-    cursor: pointer;
-  }
+
+
 
   .breathing {
     animation: breathing 2s infinite linear, fadeIn 1s linear;

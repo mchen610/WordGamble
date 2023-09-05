@@ -22,7 +22,7 @@ export default function Link_Button({
     return (
         <div className="centered">
             <Link to={redirectLink} className={className}>
-                <img src={imgLink} alt={imgLink} className="rounded" />
+                <img src={imgLink} alt={imgLink} className="rounded button" />
             </Link>
         </div>
     );
@@ -35,7 +35,7 @@ export function Button({ className, imgLink, onClickHandler }: IButtonProps) {
                 src={imgLink}
                 alt={imgLink}
                 onClick={onClickHandler}
-                className={`${className} gradient-overlay`}
+                className={`${className} button gradient-overlay`}
             />
         </div>
     );

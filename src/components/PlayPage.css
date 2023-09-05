@@ -26,7 +26,7 @@
 }
 
 .word-container img {
-    animation: breathing 0.1s ease-in, word-pop 0.5s linear;
+    animation: breathing 0.1s ease-in, word-pop 2s linear;
     opacity: 0;
 }
 

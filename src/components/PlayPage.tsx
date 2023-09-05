@@ -66,7 +66,7 @@ export default function PlayPage() {
 
                 {startTime === 0 && (
                     <Button
-                        className="button play-button"
+                        className="play-button"
                         imgLink="images/play-button.svg"
                         onClickHandler={startNewGame}
                     />
@@ -78,7 +78,7 @@ export default function PlayPage() {
                         style={{ top: `${50 + numColumns * 5.5}vh` }}
                     >
                         <Button
-                            className="button retry-button"
+                            className="retry-button"
                             imgLink="images/retry-button.png"
                             onClickHandler={startNewGame}
                         />
