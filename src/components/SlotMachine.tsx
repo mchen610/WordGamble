@@ -30,6 +30,8 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
         }
         return newList;
     });
+
+    
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
 
     const [finished, setFinished] = useState(false);
@@ -37,19 +39,23 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
     const getAnimations = (row: number, col: number) => {
         let words: string[] = wordsInLetters[row][col];
         let animations: string = "";
-        let extraDelay = 0;
-        for(let i = 0; i < words.length; i++) {
-            let delay = newValidWords.indexOf(words[i]);
-            if (i > 0) {
-                animations = ", "+animations;
+        if (words.length > 0) {
+            for (let i = 0; i < words.length; i++) {
+                let delay = newValidWords.indexOf(words[i]);
+                console.log(delay, words[i]);
+                if(delay === -1) {
+                    delay++;
+                }
+                if (i > 0) {
+                    animations = ", " + animations;
+                }
+                animations = `word-highlight 0.4s ${delay/2}s` + animations;
             }
-            animations = `word-highlight 2s ${delay+extraDelay}s`+animations;
-            extraDelay += 2;
-            
-
+            console.log(words, animations);
         }
+        
         return animations;
-    }
+    };
 
     const wordsIn = (word: string, type: string, row: number, col: number) => {
         let words: string[] = [];
@@ -61,41 +67,38 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
         }
 
         let realWords: string[] = [];
+        let prevList = wordsInLetters.slice();
         for (let i = 0; i < words.length; i++) {
             if (wordList.includes(words[i])) {
                 realWords.push(words[i]);
 
-                setWordsInLetters((prevList) => {
-                    let index = word.indexOf(words[i]);
-                    for (let j = index; j < index + words[i].length; j++) {
-                        let newRow = row;
-                        let newCol = col;
-                        if (type == "row") {
-                            newRow += j;
-                        }
-
-                        if (type == "col") {
-                            newCol += j;
-                        }
-
-                        if (type == "risingDiagonal") {
-                            newRow += j;
-                            newCol += j;
-                        }
-
-                        if (type == "fallingDiagonal") {
-                            newRow += j;
-                            newCol -= j;
-                        }
-
-                        prevList[newRow][newCol].push(words[i]);
+                let index = word.indexOf(words[i]);
+                for (let j = index; j < index + words[i].length; j++) {
+                    let newRow = row;
+                    let newCol = col;
+                    if (type == "row") {
+                        newRow += j;
                     }
 
-                    return prevList;
-                });
+                    if (type == "col") {
+                        newCol += j;
+                    }
+
+                    if (type == "risingDiagonal") {
+                        newRow += j;
+                        newCol += j;
+                    }
+
+                    if (type == "fallingDiagonal") {
+                        newRow += j;
+                        newCol -= j;
+                    }
+
+                    prevList[newRow][newCol].push(words[i]);
+                }
             }
         }
-
+        setWordsInLetters(prevList);
         return realWords;
     };
 
@@ -107,19 +110,18 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
 
     useEffect(() => {
         if (finished === true) {
-            let newWords: string[] = [];
-
+            let realWords: string[] = [];
             for (let i = 0; i < numColumns; i++) {
                 let row = "";
                 for (let j = 0; j < numColumns; j++) {
                     row += finalColumnList[j][i];
                 }
 
-                setNewValidWords((prev) => [...prev, ...wordsIn(row, "row", 0, i)]);
+                realWords = realWords.concat(wordsIn(row, "row", 0, i));
 
                 let col = finalColumnList[i].join("");
 
-                setNewValidWords((prev) => [...prev, ...wordsIn(col, "col", i, 0)]);
+                realWords = realWords.concat(wordsIn(col, "col", i, 0));
             }
 
             for (let i = 0; i < numColumns - 1; i++) {
@@ -129,8 +131,8 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                     risingDiagonal += finalColumnList[j][j + i];
                     fallingDiagonal += finalColumnList[j][numColumns - 1 - i - j];
                 }
-                setNewValidWords((prev) => [...prev, ...wordsIn(risingDiagonal, "risingDiagonal", 0, i)]);
-                setNewValidWords((prev) => [...prev, ...wordsIn(fallingDiagonal, "fallingDiagonal", 0, numColumns - 1 - i)]);
+                realWords = realWords.concat(wordsIn(risingDiagonal, "risingDiagonal", 0, i));
+                realWords = realWords.concat(wordsIn(fallingDiagonal, "fallingDiagonal", 0, numColumns - 1 - i));
             }
 
             for (let i = 1; i < numColumns - 1; i++) {
@@ -140,16 +142,19 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                     risingDiagonal += finalColumnList[j + i][j];
                     fallingDiagonal += finalColumnList[j + i][numColumns - 1 - j];
                 }
-                setNewValidWords((prev) => [...prev, ...wordsIn(risingDiagonal, "risingDiagonal", i, 0)]);
-                setNewValidWords((prev) => [...prev, ...wordsIn(fallingDiagonal, "fallingDiagonal", i, numColumns - 1)]);
+                realWords = realWords.concat(wordsIn(risingDiagonal, "risingDiagonal", i, 0));
+                realWords = realWords.concat(wordsIn(fallingDiagonal, "fallingDiagonal", i, numColumns - 1));
             }
 
-            if (newWords.length > 0) {
-                setNewValidWords(newWords);
-                addValidWords(newWords);
+            if (realWords.length > 0) {
+                setNewValidWords(realWords);
+                addValidWords(realWords);
             }
+
+            
         }
     }, [finished]);
+
 
     useEffect(() => {
         if (finalColumnList.every((list) => list.length > 0) && newValidWords.length === 0) {
@@ -199,7 +204,7 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                         : finalColumnList.map((column, r) => (
                               <div className="slot" key={r} style={{ width: `${100 / numColumns}%` }}>
                                   <div className="slot-container">
-                                      {column.map((letter, c) => Letter(letter, c, {animation: getAnimations(r, c)}))}
+                                      {column.map((letter, c) => Letter(letter, c, { animation: getAnimations(r,c) }))}
                                   </div>
                               </div>
                           ))}

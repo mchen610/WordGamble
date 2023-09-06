@@ -30,11 +30,12 @@
     height: auto;
     /* Let the height adjust based on the image's aspect ratio */
 
+
 }
 
 @keyframes word-highlight {
     0% {
-        filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
+        filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black) drop-shadow(0 0 3px black) drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
     }
 
     50% {

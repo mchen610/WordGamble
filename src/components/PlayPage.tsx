@@ -14,7 +14,6 @@ export default function PlayPage() {
     const [totalPoints, setTotalPoints] = useState<number>(0);
 
     const addValidWords = (words: string[]) => {
-        console.log(words);
         setValidWords(validWords.concat(words));
         for (var word of words) {
             setTotalPoints(totalPoints + Math.floor(word.length ** 1.5) * 10);
@@ -25,7 +24,6 @@ export default function PlayPage() {
 
     useEffect(() => {
         if (validWords.length > 0) {
-            console.log(validWords);
             setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
         }
     }, [validWords]);
