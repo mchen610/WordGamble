@@ -1,0 +1,47 @@
+.slot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot-container.started {
+    animation: scrolling infinite linear;
+}
+
+.slot-container.started:hover {
+    cursor: pointer;
+}
+
+.slot-container.stopped {
+    animation: none;
+}
+
+.slot-container.stopped:hover {
+    cursor: default;
+}
+
+.slot-container img,
+.word-container img {
+    -webkit-user-drag: none;
+    user-select: none;
+    width: 100%;
+    /* Make the image's width match the width of the container */
+    height: auto;
+    /* Let the height adjust based on the image's aspect ratio */
+
+}
+
+@keyframes word-highlight {
+    0% {
+        filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
+    }
+
+    50% {
+        
+    }
+
+    100% {
+        filter: none;
+    }
+}

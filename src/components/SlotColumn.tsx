@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Letter } from "./Word";
 import classNames from "classnames";
+import "./SlotColumn.css";
 
 const letters: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const duration = 9;
