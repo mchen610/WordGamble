@@ -8,6 +8,7 @@ import Header from "./Header";
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
 let numColumns = 6;
+const speed = 5;
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);
@@ -29,14 +30,14 @@ export default function PlayPage() {
                 setTotalPoints((prevPoints) => prevPoints + Math.floor(newValidWords[pointsIndex + 1].length ** 1.5) * 10);
                 setPointsIndex((prevIndex) => prevIndex + 1);
             }
-        }, 100);
+        }, speed * 100);
     }, [totalPoints]);
 
     const [animation, setAnimation] = useState<string>("none");
 
     useEffect(() => {
         if (validWords.length > 0) {
-            setAnimation(`breathing 0.1s ${newValidWords.length} ease-in, word-pop 0.1s ${newValidWords.length} linear`);
+            setAnimation(`bulge ${speed / 10}s ${newValidWords.length} ease-in, word-pop ${speed / 10}s ${newValidWords.length} ease-in`);
         }
     }, [validWords]);
 

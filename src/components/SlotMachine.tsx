@@ -49,7 +49,7 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                 if (i > 0) {
                     animations = ", " + animations;
                 }
-                animations = `word-highlight 0.06s ${delay/10}s` + animations;
+                animations = `word-highlight 0.49s ${delay/2}s` + animations;
             }
             console.log(words, animations);
         }

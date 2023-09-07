@@ -54,3 +54,17 @@ span.play-bg {
     width: 100vw;
     height: 47vw;
 }
+
+@keyframes bulge {
+    0% {
+        transform: scale(1.1);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    100% {  
+        transform: scale(1);
+    }
+}
