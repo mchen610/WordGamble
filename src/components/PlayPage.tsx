@@ -7,7 +7,7 @@ import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-let numColumns = 7;
+let numColumns = 4;
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);
@@ -16,8 +16,9 @@ export default function PlayPage() {
     const addValidWords = (words: string[]) => {
         setValidWords(validWords.concat(words));
         for (var word of words) {
-            setTotalPoints(totalPoints + Math.floor(word.length ** 1.5) * 10);
+            setTotalPoints((prevPoints) => (prevPoints+Math.floor(word.length ** 1.5) * 10));
         }
+
     };
 
     const [animation, setAnimation] = useState<string>("none");
