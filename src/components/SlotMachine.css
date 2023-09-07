@@ -86,6 +86,6 @@ span.machine-front {
     }
 
     100% {
-        filter: drop-shadow(0 0 100px black);
+        filter: drop-shadow(0 0 2vh black);
     }
 }

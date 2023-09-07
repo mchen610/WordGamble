@@ -2,7 +2,6 @@ import "./HomePage.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Link_Button from "./Buttons";
-import { useEffect } from "react";
 
 export default function HomePage() {
     

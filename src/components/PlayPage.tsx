@@ -7,25 +7,36 @@ import Header from "./Header";
 
 //https://stackoverflow.com/questions/54895883/reset-to-initial-state-with-react-hooks
 
-let numColumns = 4;
+let numColumns = 6;
 
 export default function PlayPage() {
     const [validWords, setValidWords] = useState<string[]>([]);
     const [totalPoints, setTotalPoints] = useState<number>(0);
+    const [newValidWords, setNewValidWords] = useState<string[]>([]);
+    const [pointsIndex, setPointsIndex] = useState<number>(0);
 
     const addValidWords = (words: string[]) => {
-        setValidWords(validWords.concat(words));
-        for (var word of words) {
-            setTotalPoints((prevPoints) => (prevPoints+Math.floor(word.length ** 1.5) * 10));
+        if (words.length > 0) {
+            setValidWords(validWords.concat(words));
+            setNewValidWords(words);
+            setTotalPoints((prevPoints) => prevPoints + Math.floor(words[0].length ** 1.5) * 10);
         }
-
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (pointsIndex < newValidWords.length - 1) {
+                setTotalPoints((prevPoints) => prevPoints + Math.floor(newValidWords[pointsIndex + 1].length ** 1.5) * 10);
+                setPointsIndex((prevIndex) => prevIndex + 1);
+            }
+        }, 100);
+    }, [totalPoints]);
 
     const [animation, setAnimation] = useState<string>("none");
 
     useEffect(() => {
         if (validWords.length > 0) {
-            setAnimation(`breathing 0.1s ease-in, word-pop 0.5s linear`);
+            setAnimation(`breathing 0.1s ${newValidWords.length} ease-in, word-pop 0.1s ${newValidWords.length} linear`);
         }
     }, [validWords]);
 
@@ -36,6 +47,7 @@ export default function PlayPage() {
         setStartTime(performance.now());
         setMachineKey(machineKey + 1);
         setAnimation("none");
+        setPointsIndex(0);
         /*if (startTime > 0) {
             numColumns = Math.floor(Math.random() * 4) + 3;
         }*/
@@ -56,31 +68,13 @@ export default function PlayPage() {
                 >
                     {totalPoints}
                 </div>
-                <SlotMachine
-                    startTime={startTime}
-                    numColumns={numColumns}
-                    key={machineKey}
-                    addValidWords={addValidWords}
-                />
+                <SlotMachine startTime={startTime} numColumns={numColumns} key={machineKey} addValidWords={addValidWords} />
 
-                {startTime === 0 && (
-                    <Button
-                        className="play-button"
-                        imgLink="images/play-button.svg"
-                        onClickHandler={startNewGame}
-                    />
-                )}
+                {startTime === 0 && <Button className="play-button" imgLink="images/play-button.svg" onClickHandler={startNewGame} />}
 
                 {startTime > 0 && (
-                    <div
-                        className="retry-container"
-                        style={{ top: `${50 + numColumns * 5.5}vh` }}
-                    >
-                        <Button
-                            className="retry-button"
-                            imgLink="images/retry-button.png"
-                            onClickHandler={startNewGame}
-                        />
+                    <div className="retry-container" style={{ top: `${50 + numColumns * 5.5}vh` }}>
+                        <Button className="retry-button" imgLink="images/retry-button.png" onClickHandler={startNewGame} />
                     </div>
                 )}
             </div>
