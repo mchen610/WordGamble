@@ -41,17 +41,20 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
         let animations: string = "";
         if (words.length > 0) {
             for (let i = 0; i < words.length; i++) {
+              
                 let delay = newValidWords.indexOf(words[i]);
-                console.log(delay, words[i]);
+                if (newValidWords) {
+                    delay++;
+                }
                 if(delay === -1) {
                     delay++;
+                    console.log('does this even happen wtf', words[i])
                 }
                 if (i > 0) {
                     animations = ", " + animations;
                 }
                 animations = `word-highlight 0.49s ${delay/2}s` + animations;
             }
-            console.log(words, animations);
         }
         
         return animations;
@@ -145,10 +148,12 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                 realWords = realWords.concat(wordsIn(risingDiagonal, "risingDiagonal", i, 0));
                 realWords = realWords.concat(wordsIn(fallingDiagonal, "fallingDiagonal", i, numColumns - 1));
             }
+            realWords.sort();
 
             if (realWords.length > 0) {
                 setNewValidWords(realWords);
                 addValidWords(realWords);
+                console.log(realWords);
             }
 
             
