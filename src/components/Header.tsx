@@ -11,12 +11,10 @@ export default function Header({ mode }: IHeaderProps) {
     };
 
     return (
-        <nav
-            className={`navbar navbar-expand-lg py-1 fixed-top border-bottom border-2 ${classNames[mode]}`}
-        >
+        <nav className={`navbar navbar-expand-lg py-1 fixed-top border-bottom border-2 ${classNames[mode]}`}>
             <div className="container d-flex justify-content-center">
                 <Link className="nav-link px-3 navbar-brand" to="/" id="Home">
-                    Word Gamble
+                    Word Slots 🎰
                 </Link>
             </div>
         </nav>
