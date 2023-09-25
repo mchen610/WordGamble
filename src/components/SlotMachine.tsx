@@ -31,7 +31,6 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
         return newList;
     });
 
-    
     const [newValidWords, setNewValidWords] = useState<string[]>([]);
 
     const [finished, setFinished] = useState(false);
@@ -207,12 +206,12 @@ export const SlotMachine = ({ numColumns, startTime, addValidWords }: ISlotMachi
                 <div className="columns-container">
                     {!finished
                         ? ColumnList.map((column, r) => (
-                              <div className="slot" key={r}>
+                              <div className="slot-column" key={r}>
                                   {column}
                               </div>
                           ))
                         : finalColumnList.map((column, r) => (
-                              <div className="slot" key={r} style={{ width: `${100 / numColumns}%` }}>
+                              <div className="slot-column" key={r} style={{ width: `${100 / numColumns}%` }}>
                                   <div className="slot-container">
                                       {column.map((letter, c) => Letter(letter, c, { animation: getAnimations(r,c) }))}
                                   </div>

@@ -1,4 +1,3 @@
-import "./Footer.css";
 import { Link } from "react-router-dom";
 
 interface IFooterItem {
@@ -33,9 +32,7 @@ function Footer({ mode }: IFooter) {
 
     return (
         <nav className={`navbar navbar-expand-lg py-0 fixed-bottom border-bottom ${classNames[mode]}`}>
-            <div
-                className="container-fluid collapse navbar-collapse"
-            >
+            <div className="container d-flex justify-content-center">
                 <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                     {footerLinks.map((item) => (
                         <Link className="nav-link px-3" to={item.path} key={item.title}>

@@ -9,7 +9,7 @@ export default function HomePage() {
    
     return (
         <>
-            <title>Word Gamble</title>
+            <title>Word Slots</title>
             
             <div className="home">
                 <Header mode="dark"/>

@@ -25,11 +25,12 @@ span.machine-front {
     filter: drop-shadow(0 20px 20px white);
 }
 
-.slot {
+.slot-column {
     position: relative;
     object-fit: cover;
     overflow: hidden;
     height: 100%;
+    width: 100%;
     padding-top: 1%;
     background-image: url("/images/column-bg.png");
     background-repeat: no-repeat;
@@ -39,7 +40,7 @@ span.machine-front {
 }
 
 
-.slot+.slot {
+.slot-column+.slot-column {
     margin-left: 0.5vw;
 }
 
