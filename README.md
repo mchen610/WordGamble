@@ -15,6 +15,6 @@
 - Updating code to become dynamic; this project started as a static 3x3 slot machine, but I re-coded it such that it would work exactly the same for any whole number.
 - Debugging, especially related to the re-rendering interactions between the data and the webpage
 - Searching [Stack Overflow](https://stackoverflow.com/) effectively to find guidance in any issues I ran into
-- Thinking about how a user would be frustrated or pleased by any part of the experience and adjusting my program accordingly
+- Thinking about how a user would be frustrated or pleased by any part of the user experience and adjusting my program accordingly
 
 
