@@ -9,7 +9,7 @@
 - Learning industry conventions like naming interfaces with the convention `interface IProps`
 - Making cool animations with CSS and learning how animations interact with each other; for example, if an element has two animations, the ones towards the left of the line of code are run last
 - How to deploy a webpage on Github Pages
-- Drawing bubble letterst
+- Drawing bubble letters
 
 ## More general things I learned
 - Updating code to become dynamic; this project started as a static 3x3 slot machine, but I re-coded it such that it would work exactly the same for any whole number.
