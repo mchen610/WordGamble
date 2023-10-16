@@ -1,4 +1,4 @@
-# This project is deployed on [GitHub Pages](https://mchen610.github.io/WordSlots/).
+# This project is deployed on [GitHub Pages](https://mchen610.github.io/word-slots/).
 ![React+TS+Vite](https://miro.medium.com/v2/resize:fit:1400/1*A4AhcQBucS8bLpNRq3HCLg.png)
 
 # :slot_machine: Word Slots
